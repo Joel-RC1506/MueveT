@@ -1,0 +1,6 @@
+{
+  "name": "MueveT",
+  "description": "Aplicación de mapeo de transporte público en Toluca en tiempo real para consultar rutas, paradas, tarifas, capacidad y contribuir reportes comunitarios con GPS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

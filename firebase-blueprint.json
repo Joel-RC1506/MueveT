@@ -1,0 +1,191 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Registered Google user profile stored on MueveT servers.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Authenticated Firebase UID matching request.auth.uid."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name from Google account."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address from Google account."
+        },
+        "photoUrl": {
+          "type": "string",
+          "description": "Optional profile avatar URL."
+        },
+        "city": {
+          "type": "string",
+          "description": "Current city or transit zone."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of initial registration (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of latest update (FieldValue.serverTimestamp())."
+        },
+        "lastLoginAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of latest login (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "email",
+        "city",
+        "createdAt",
+        "updatedAt",
+        "lastLoginAt"
+      ]
+    },
+    "SavedRouteRecord": {
+      "title": "SavedRouteRecord",
+      "description": "User favorite transit route synchronized to Firestore.",
+      "type": "object",
+      "properties": {
+        "routeCode": {
+          "type": "string",
+          "description": "Transit route code such as 76 or T-09."
+        },
+        "routeTitle": {
+          "type": "string",
+          "description": "Human-readable corridor title."
+        },
+        "origin": {
+          "type": "string",
+          "description": "Origin hub name."
+        },
+        "destination": {
+          "type": "string",
+          "description": "Destination hub name."
+        },
+        "transportType": {
+          "type": "string",
+          "description": "TransportType enum name."
+        },
+        "priceMxn": {
+          "type": "number",
+          "description": "Fare in Mexican pesos."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when saved (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when updated (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "routeCode",
+        "routeTitle",
+        "origin",
+        "destination",
+        "transportType",
+        "priceMxn",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UserReportRecord": {
+      "title": "UserReportRecord",
+      "description": "User-submitted transit crowding, fare, and GPS report stored on server.",
+      "type": "object",
+      "properties": {
+        "routeId": {
+          "type": "string",
+          "description": "Target route identifier."
+        },
+        "routeCode": {
+          "type": "string",
+          "description": "Route code."
+        },
+        "routeTitle": {
+          "type": "string",
+          "description": "Route title."
+        },
+        "capacity": {
+          "type": "string",
+          "enum": ["HAY_LUGAR", "CASI_LLENA", "VA_LLENA"],
+          "description": "CapacityLevel enum name."
+        },
+        "priceMxn": {
+          "type": "number",
+          "description": "Reported fare in MXN."
+        },
+        "addedStops": {
+          "type": "array",
+          "description": "Bounded list of stop names added by the user."
+        },
+        "gpsPointsCount": {
+          "type": "integer",
+          "description": "Number of GPS trail points recorded."
+        },
+        "latitude": {
+          "type": "number",
+          "description": "Optional GPS latitude."
+        },
+        "longitude": {
+          "type": "number",
+          "description": "Optional GPS longitude."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when created (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when updated (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "routeId",
+        "routeCode",
+        "routeTitle",
+        "capacity",
+        "priceMxn",
+        "addedStops",
+        "gpsPointsCount",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Registered Google user account profile isolated to its owner."
+    },
+    "/users/{userId}/saved_routes/{routeId}": {
+      "schema": {
+        "$ref": "#/entities/SavedRouteRecord"
+      },
+      "description": "User-saved favorite transit routes synced across devices."
+    },
+    "/users/{userId}/reports/{reportId}": {
+      "schema": {
+        "$ref": "#/entities/UserReportRecord"
+      },
+      "description": "Transit reports submitted by the authenticated user."
+    }
+  }
+}

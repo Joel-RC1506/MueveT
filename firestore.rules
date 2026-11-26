@@ -1,0 +1,158 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidTimestamp(ts) {
+      return ts is timestamp && ts <= request.time;
+    }
+
+    function isValidUserProfile(data, userId) {
+      return data.userId is string &&
+             data.userId == userId &&
+             data.displayName is string &&
+             data.displayName.size() >= 1 &&
+             data.displayName.size() <= 80 &&
+             data.email is string &&
+             data.email.size() >= 3 &&
+             data.email.size() <= 120 &&
+             data.city is string &&
+             data.city.size() >= 1 &&
+             data.city.size() <= 60 &&
+             (!('photoUrl' in data) || (data.photoUrl is string && data.photoUrl.size() <= 500)) &&
+             isValidTimestamp(data.createdAt) &&
+             isValidTimestamp(data.updatedAt) &&
+             isValidTimestamp(data.lastLoginAt);
+    }
+
+    function isValidSavedRoute(data) {
+      return data.routeCode is string &&
+             data.routeCode.size() >= 1 &&
+             data.routeCode.size() <= 20 &&
+             data.routeTitle is string &&
+             data.routeTitle.size() >= 1 &&
+             data.routeTitle.size() <= 100 &&
+             data.origin is string &&
+             data.origin.size() >= 1 &&
+             data.origin.size() <= 60 &&
+             data.destination is string &&
+             data.destination.size() >= 1 &&
+             data.destination.size() <= 60 &&
+             data.transportType is string &&
+             data.transportType.size() >= 1 &&
+             data.transportType.size() <= 30 &&
+             data.priceMxn is number &&
+             data.priceMxn >= 0 &&
+             data.priceMxn <= 500 &&
+             isValidTimestamp(data.createdAt) &&
+             isValidTimestamp(data.updatedAt);
+    }
+
+    function isValidUserReport(data) {
+      return data.routeId is string &&
+             data.routeId.size() >= 1 &&
+             data.routeId.size() <= 64 &&
+             data.routeCode is string &&
+             data.routeCode.size() >= 1 &&
+             data.routeCode.size() <= 20 &&
+             data.routeTitle is string &&
+             data.routeTitle.size() >= 1 &&
+             data.routeTitle.size() <= 100 &&
+             data.capacity in ['HAY_LUGAR', 'CASI_LLENA', 'VA_LLENA'] &&
+             data.priceMxn is number &&
+             data.priceMxn >= 0 &&
+             data.priceMxn <= 500 &&
+             data.addedStops is list &&
+             data.addedStops.size() <= 15 &&
+             (data.addedStops.size() == 0 || (data.addedStops[0] is string && data.addedStops[0].size() <= 60)) &&
+             data.gpsPointsCount is int &&
+             data.gpsPointsCount >= 0 &&
+             data.gpsPointsCount <= 500 &&
+             (!('latitude' in data) || (data.latitude is number && data.latitude >= -90 && data.latitude <= 90)) &&
+             (!('longitude' in data) || (data.longitude is number && data.longitude >= -180 && data.longitude <= 180)) &&
+             isValidTimestamp(data.createdAt) &&
+             isValidTimestamp(data.updatedAt);
+    }
+
+    match /users/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if isOwner(userId);
+
+      allow create: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       incoming().keys().hasAll(['userId', 'displayName', 'email', 'city', 'createdAt', 'updatedAt', 'lastLoginAt']) &&
+                       incoming().keys().hasOnly(['userId', 'displayName', 'email', 'photoUrl', 'city', 'createdAt', 'updatedAt', 'lastLoginAt']) &&
+                       isValidUserProfile(incoming(), userId);
+
+      allow update: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       isValidUserProfile(incoming(), userId) &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'email', 'photoUrl', 'city', 'updatedAt', 'lastLoginAt']);
+
+      allow delete: if isOwner(userId) && isValidId(userId);
+
+      match /saved_routes/{routeId} {
+        allow get: if isOwner(userId) && isValidId(routeId);
+        allow list: if isOwner(userId);
+
+        allow create: if isOwner(userId) &&
+                         isValidId(routeId) &&
+                         incoming().keys().hasAll(['routeCode', 'routeTitle', 'origin', 'destination', 'transportType', 'priceMxn', 'createdAt', 'updatedAt']) &&
+                         incoming().keys().hasOnly(['routeCode', 'routeTitle', 'origin', 'destination', 'transportType', 'priceMxn', 'createdAt', 'updatedAt']) &&
+                         isValidSavedRoute(incoming());
+
+        allow update: if isOwner(userId) &&
+                         isValidId(routeId) &&
+                         incoming().createdAt == existing().createdAt &&
+                         isValidSavedRoute(incoming()) &&
+                         incoming().diff(existing()).affectedKeys().hasOnly(['routeCode', 'routeTitle', 'origin', 'destination', 'transportType', 'priceMxn', 'updatedAt']);
+
+        allow delete: if isOwner(userId) && isValidId(routeId);
+      }
+
+      match /reports/{reportId} {
+        allow get: if isOwner(userId) && isValidId(reportId);
+        allow list: if isOwner(userId);
+
+        allow create: if isOwner(userId) &&
+                         isValidId(reportId) &&
+                         incoming().keys().hasAll(['routeId', 'routeCode', 'routeTitle', 'capacity', 'priceMxn', 'addedStops', 'gpsPointsCount', 'createdAt', 'updatedAt']) &&
+                         incoming().keys().hasOnly(['routeId', 'routeCode', 'routeTitle', 'capacity', 'priceMxn', 'addedStops', 'gpsPointsCount', 'latitude', 'longitude', 'createdAt', 'updatedAt']) &&
+                         isValidUserReport(incoming());
+
+        allow update: if isOwner(userId) &&
+                         isValidId(reportId) &&
+                         incoming().createdAt == existing().createdAt &&
+                         isValidUserReport(incoming()) &&
+                         incoming().diff(existing()).affectedKeys().hasOnly(['capacity', 'priceMxn', 'addedStops', 'gpsPointsCount', 'latitude', 'longitude', 'updatedAt']);
+
+        allow delete: if isOwner(userId) && isValidId(reportId);
+      }
+    }
+  }
+}

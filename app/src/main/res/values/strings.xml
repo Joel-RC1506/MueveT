@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">MueveT</string>
+    <string name="city_cdmx">Toluca</string>
+    <string name="tab_explora">Explora</string>
+    <string name="tab_saved">Rutas guardadas</string>
+    <string name="tab_contribute">Contribuir</string>
+    <string name="tab_assistant">Asistente</string>
+    <string name="explora_eyebrow">TU CIUDAD, A TU RITMO</string>
+    <string name="explora_headline_prefix">Menos vueltas. Más</string>
+    <string name="explora_headline_accent">camino.</string>
+    <string name="explora_subtitle">Encuentra tu ruta, aunque no esté en el mapa.</string>
+    <string name="search_where_to">¿A dónde vas?</string>
+    <string name="report_route_cta">Reportar ruta / unidad</string>
+    <string name="saved_eyebrow">TUS CAMINOS DE SIEMPRE</string>
+    <string name="saved_title">Rutas guardadas</string>
+    <string name="saved_subtitle">Menos buscar, más llegar. Tus rutas favoritas en un solo lugar.</string>
+    <string name="contribute_eyebrow">EL MAPA LO HACEMOS TODOS</string>
+    <string name="contribute_title">Tu viaje suma.</string>
+    <string name="contribute_subtitle">Lo que ves en el camino puede ayudar a alguien más.\n¿Qué nos cuentas?</string>
+    <string name="footer_tagline">Un viaje mejor empieza con todos.</string>
+    <string name="local_storage_note">Tu cuenta y reportes se sincronizan en nuestros servidores y en tu dispositivo.</string>
+    <string name="cd_recenter_map">Centrar mapa en mi ubicación</string>
+    <string name="cd_zoom_in">Acercar mapa</string>
+    <string name="cd_zoom_out">Alejar mapa</string>
+    <string name="cd_bookmark_route">Guardar o quitar ruta</string>
+</resources>
