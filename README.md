@@ -4,9 +4,7 @@
 
 - **Equipo:** Equipo 1
 - **Campus:** Toluca
-- **Versión / Estado del proyecto:** [PENDIENTE]
-- **Repositorio / Demo:** [PENDIENTE]
-
+- **Versión / Estado del proyecto:** Final
 ---
 
 ## 1. Resumen ejecutivo
@@ -109,9 +107,6 @@ Apoyar el mapeo colaborativo de rutas de transporte público con los usuarios, i
    - **Firebase App Check:** Configura el proveedor ReCAPTCHA (usando `recaptcha_site_key` en `firebase_applet_config.xml`) para compilaciones release y registra el token de depuración para entornos debug.
 3. Descarga el archivo `google-services.json` desde Firebase Console y colócalo en `app/google-services.json`. *(Gradle incluye tolerancia en compilación si falta el archivo; [PENDIENTE: completar nota sobre limitaciones sin este archivo]).*
 
-#### Compilación y ejecución
-[PENDIENTE: agregar comandos de Gradle, llaves adicionales si aplican e instrucciones para compilar y ejecutar el proyecto localmente.]
-
 ---
 
 ## 5. Manual de usuario
@@ -119,7 +114,7 @@ Apoyar el mapeo colaborativo de rutas de transporte público con los usuarios, i
 Esta guía está pensada para cualquier persona que use **MueveT** por primera vez.
 
 ### Cómo instalar y acceder a la app
-1. **Descarga o acceso:** [PENDIENTE: colocar enlace de descarga, archivo APK o instrucciones para instalar la app en Android].
+1. **Descarga o acceso:** [https://drive.google.com/file/d/19JQFVoqMjrHcFWr9NYG93F02VXA1wITG/view?usp=sharing].
 2. **Inicio de sesión:** Accede utilizando tu cuenta de Google. [PENDIENTE: indicar si existen pasos adicionales en el primer ingreso].
 3. **Permisos necesarios:** Activa el permiso de ubicación para obtener recomendaciones y paradas cercanas a tu posición actual (si no está disponible, el asistente usa Toluca como referencia).
 
