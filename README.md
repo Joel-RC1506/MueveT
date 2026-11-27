@@ -127,7 +127,7 @@ Esta guía está pensada para cualquier persona que use **MueveT** por primera v
 
 ---
 
-## 6. Accesibilidad e impacto
+## 6. Accesibilidad e impacto:
 
 ### Inclusión y accesibilidad
 - **Acceso equitativo a la información:** MueveT está diseñada para ciudadanos que utilizan combis, microbuses, camiones y taxis en ciudades donde no existen mapas oficiales de rutas, paradas ni horarios, acercando herramientas de movilidad a quienes más dependen del transporte público.
