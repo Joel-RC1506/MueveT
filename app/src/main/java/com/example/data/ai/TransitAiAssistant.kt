@@ -20,17 +20,17 @@ enum class AiModelTier(
     val descriptionEs: String,
 ) {
     GENERAL(
-        modelId = "gemini-3.8-flash",
+        modelId = "gemini-2.5-flash",
         labelEs = "Estándar",
         descriptionEs = "Equilibrado con Google Maps",
     ),
     FAST(
-        modelId = "gemini-3.5-flash-lite",
+        modelId = "gemini-2.5-flash-lite",
         labelEs = "Rápido",
         descriptionEs = "Respuestas veloces",
     ),
     DEEP(
-        modelId = "gemini-4-argon",
+        modelId = "gemini-2.5-pro",
         labelEs = "Profundo",
         descriptionEs = "Razonamiento complejo",
     ),
