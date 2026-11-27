@@ -21,11 +21,11 @@ En muchas ciudades, el transporte público concesionado (combis, microbuses, cam
 ### Propuesta de solución
 **MueveT** centraliza en un mapa accesible la información del transporte público local. Al combinar inteligencia artificial con los aportes de la comunidad de usuarios, la app construye y actualiza las rutas, muestra el costo de cada trayecto, permite conocer qué tan llenas vienen las unidades, indica frecuencias y tiempos de traslado, y optimiza viajes que requieren transbordos.
 
-- **Bocetos / Wireframes de la interfaz:** [PENDIENTE: insertar imágenes o enlace a Figma/prototipo]
+- **Bocetos / Wireframes de la interfaz:** [https://grid-savor-30246568.figma.site/]
 
 ### Alineación con los ODS
 - **ODS 11 — Ciudades y comunidades sostenibles (Meta 11.2):** El proyecto atiende directamente la Meta 11.2, orientada a garantizar sistemas de transporte seguros, accesibles y sostenibles para todos, al reducir las barreras de información que impiden aprovechar el transporte público frente al automóvil.
-- **ODS 10 — Reducción de las desigualdades:** Al incluir un listado de precios por ruta y facilitar el acceso a información sobre el transporte concesionado, la app apoya la planeación económica de los traslados. [PENDIENTE: ampliar cómo MueveT contribuye a reducir otras desigualdades en el acceso a la movilidad urbana]
+- **ODS 10 — Reducción de las desigualdades:** Al incluir un listado de precios por ruta y facilitar el acceso a información sobre el transporte concesionado, la app apoya la planeación económica de los traslados. 
 
 ---
 
@@ -48,7 +48,6 @@ A continuación se describen las funciones principales de **MueveT**:
 ### Arquitectura general
 **MueveT** sigue una arquitectura **MVVM (Model–View–ViewModel)** con un esquema híbrido cliente–nube (**offline-first**), donde la interfaz declarativa en **Jetpack Compose** observa un estado único inmutable (`MueveTUiState`).
 
-- **Diagrama de arquitectura:** [PENDIENTE: insertar diagrama de flujo entre cliente, Room, Firestore y Firebase AI Logic]
 
 ### Stack tecnológico
 
@@ -105,8 +104,7 @@ Apoyar el mapeo colaborativo de rutas de transporte público con los usuarios, i
    - **Cloud Firestore:** Crea la base de datos correspondiente al identificador `firestore_database_id` definido en `app/src/main/res/values/firebase_applet_config.xml` y despliega las reglas de `firestore.rules`.
    - **Firebase AI Logic:** Habilita el backend de Gemini Developer API (`GenerativeBackend.googleAI()`).
    - **Firebase App Check:** Configura el proveedor ReCAPTCHA (usando `recaptcha_site_key` en `firebase_applet_config.xml`) para compilaciones release y registra el token de depuración para entornos debug.
-3. Descarga el archivo `google-services.json` desde Firebase Console y colócalo en `app/google-services.json`. *(Gradle incluye tolerancia en compilación si falta el archivo; [PENDIENTE: completar nota sobre limitaciones sin este archivo]).*
-
+3. Descarga el archivo `google-services.json` desde Firebase Console y colócalo en `app/google-services.json`. *(Gradle incluye tolerancia en compilación si falta el archivo;
 ---
 
 ## 5. Manual de usuario
@@ -115,7 +113,7 @@ Esta guía está pensada para cualquier persona que use **MueveT** por primera v
 
 ### Cómo instalar y acceder a la app
 1. **Descarga o acceso:** [https://drive.google.com/file/d/19JQFVoqMjrHcFWr9NYG93F02VXA1wITG/view?usp=sharing].
-2. **Inicio de sesión:** Accede utilizando tu cuenta de Google. [PENDIENTE: indicar si existen pasos adicionales en el primer ingreso].
+2. **Inicio de sesión:** Accede utilizando tu cuenta de Google.
 3. **Permisos necesarios:** Activa el permiso de ubicación para obtener recomendaciones y paradas cercanas a tu posición actual (si no está disponible, el asistente usa Toluca como referencia).
 
 ### Cómo usar MueveT paso a paso
@@ -124,11 +122,8 @@ Esta guía está pensada para cualquier persona que use **MueveT** por primera v
 3. **Consulta frecuencias y tiempos:** Selecciona la ruta que necesitas para ver cada cuánto pasa el transporte y cuánto tiempo aproximado te tomará llegar a tu destino.
 4. **Verifica el termómetro de ocupación:** Antes de subir, observa el indicador del "termómetro de ocupación" para saber qué tan lleno viene el transporte.
 5. **Pregunta al Asistente para transbordos y paradas:** Entra a la pestaña **Asistente** para consultar en lenguaje natural qué camión o combinación tomar entre zonas (por ejemplo, Centro, Ciudad Universitaria, Paseo Tollocan, Terminal Toluca o Metepec). Puedes elegir entre los modos **Estándar**, **Rápido** o **Profundo**, tocar una de las **Sugerencias rápidas** o escribir tu pregunta. Cuando el asistente te muestre ubicaciones en la tarjeta de **Google Maps**, tócalas para abrir la parada directamente en tu app de mapas.
-6. **Ayuda a mapear rutas:** Si conoces una ruta que falta o ha cambiado, puedes aportar información desde la app para que se integre al catálogo y el mapa se mantenga útil para todos. [PENDIENTE: detallar los pasos exactos dentro de la pantalla para enviar un reporte].
+6. **Ayuda a mapear rutas:** Si conoces una ruta que falta o ha cambiado, puedes aportar información desde la app para que se integre al catálogo y el mapa se mantenga útil para todos.
 
-### Preguntas frecuentes y soporte
-- **¿Qué hago si mi ruta no aparece en el mapa?** [PENDIENTE: indicar cómo reportarla o contribuir al mapeo].
-- **Contacto del equipo:** [PENDIENTE: correo o canal de soporte del Equipo 1].
 
 ---
 
@@ -137,11 +132,9 @@ Esta guía está pensada para cualquier persona que use **MueveT** por primera v
 ### Inclusión y accesibilidad
 - **Acceso equitativo a la información:** MueveT está diseñada para ciudadanos que utilizan combis, microbuses, camiones y taxis en ciudades donde no existen mapas oficiales de rutas, paradas ni horarios, acercando herramientas de movilidad a quienes más dependen del transporte público.
 - **Transparencia en el costo del transporte:** Al mostrar un listado de precios por ruta y permitir filtrar por la opción más barata, facilita que los usuarios planeen sus gastos diarios de movilidad con claridad.
-- **Enfoque offline-first:** Al contar con almacenamiento local en el dispositivo, la arquitectura busca facilitar la disponibilidad de la información de rutas incluso con conectividad limitada. [PENDIENTE: detallar qué funciones específicas operan sin conexión]
-- **Accesibilidad en la interfaz:** [PENDIENTE: detallar características implementadas como soporte para lectores de pantalla, tamaño de fuente adaptable, contraste visual o lenguaje sencillo].
+- **Enfoque offline-first:** Al contar con almacenamiento local en el dispositivo, la arquitectura busca facilitar la disponibilidad de la información de rutas incluso con conectividad limitada. 
 
 ### Impacto esperado
 - **Mejor experiencia de movilidad urbana:** Reducir la incertidumbre diaria sobre rutas, costos, tiempos de espera, transbordos y nivel de ocupación de las unidades.
 - **Impulso al transporte sostenible:** Hacer más práctico y predecible el uso del transporte público para incentivar que más personas lo elijan frente al automóvil particular.
 - **Contribución a la Meta 11.2 del ODS 11:** Apoyar el avance hacia sistemas de transporte más seguros, accesibles y sostenibles en entornos urbanos.
-- **Indicadores o metas de impacto del proyecto:** [PENDIENTE: añadir métricas proyectadas de usuarios, rutas mapeadas o reducción de tiempos de traslado].
